@@ -14,6 +14,22 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="itowns.css">
     </head>
     <body>
+        <div id='pieddepage'></div>
+        <div id='formulaire'>
+          <div class="recherche_p">
+<form action="/search" id="searchthis" method="get">
+<input id="search" name="q" type="text" placeholder="Entrer une adresse" />
+<div id='coordonne'>
+<input id="search" name"p" type="text" placeholder="Entrer une latitude"/>
+<input id="search" name"o" type="text" placeholder="Entrer une longitude"/>
+</div>
+<input id="search-btn" type="submit" value="Rechercher" />
+</form>
+
+
+</div>
+        </div>
+
         <div id="viewerDiv"></div>
         <script src="examples/GUI/GuiTools.js"></script>
         <script src="itowns.js"></script>
@@ -22,7 +38,6 @@ and open the template in the editor.
 
             // Initial position
             var positionOnGlobe = { longitude: 2.351323, latitude: 48.856712, altitude: 25000000 };
-
             // iTowns namespace defined here
             // Creation of the HTML DOM where the view will be initialized
             var viewerDiv = document.getElementById('viewerDiv');
@@ -31,8 +46,6 @@ and open the template in the editor.
             // Creation of the menu
             var menuGlobe = new GuiTools('menuDiv', globeView);
             menuGlobe.view = globeView;
-
-
             function addLayerCb(layer) {
                 return globeView.addLayer(layer);
             }
@@ -59,14 +72,16 @@ and open the template in the editor.
                 console.info('Globe initialized');
                 /*
                 ****************************
-                ****************************                
-                CODE HERE
+                ****************************
+
                 CODE HERE
                 CODE HERE
                 ****************************
                 ****************************
                 */
+
             });
+
 
             window.globeView = globeView;
 </script>

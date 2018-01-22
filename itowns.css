@@ -1,21 +1,38 @@
 html {
 	height: 100%
 }
-body { 
-	margin: 0; 
-	overflow:hidden; 
+body {
+	margin: 0;
+	overflow:hidden;
 	height:100%
 }
 
+form{
+	display : flex;
+  flex-direction: column;
+	position : fixed;
+}
+.formulaire{
+	width: 164px;
+}
+.coordone input{
+	width: 50px;
+}
+input{
+
+ width:160px;
+	background-color: pink;
+}
 #viewerDiv {
     margin : auto auto;
-    width: 100%;
-    height: 100%;
-    padding: 0;
+    width: 85%;
+    height: 90%;
+
+		margin-right: 0;
 }
 #menuDiv {
-	position: absolute; 
-	top:0px; 
-	margin-left: 0px;
-}
+	position: absolute;
+	top:0px;
+	margin-right: 0px;
 
+}
