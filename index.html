@@ -23,6 +23,7 @@ and open the template in the editor.
                 <legend>Rechercher un lieu</legend>
               <select class="ville" action="">
                 <option value="ENSG">ENSG</option>
+
                 <option value="paris">Paris</option>
                 <option value="lyon">Lyon</option>
                 <option value="marseille">Marseille</option>
@@ -48,7 +49,7 @@ and open the template in the editor.
             /* global itowns,document,GuiTools*/
 
             // Initial position
-            var positionOnGlobe = { longitude: 2.587316, latitude: 48.841063, altitude: 1000 };
+            var positionOnGlobe = { longitude: 2.587316, latitude: 48.841063, altitude: 10000 };
 
             // iTowns namespace defined here
             // Creation of the HTML DOM where the view will be initialized
@@ -83,22 +84,31 @@ and open the template in the editor.
                 // eslint-disable-next-line no-console
                 console.info('Globe initialized');
 
-                var form_selection = document.getElementById('ville');
+
+                var form_selection = document.getElementById('searchthis')
+                var liste_ville = document.getElementById('ville');
+
 
                 function chang_lieu(event){
+                  event.preventDefault();
                   var ajax = new XMLHttpRequest();
-                  var lieu_choisi = "Forcalquier"//document.getElementById("");
-                  ajax.open('GET', 'http://api.geonames.org/search?q='+lieu_choisi+'&username=AlexFloProjetWeb',true);
+                  var lieu_choisi = liste_ville.options[liste_ville.selectedIndex].value;
+                  ajax.open('GET', 'http://api.geonames.org/searchJSON?q='+lieu_choisi+'&maxRows=1&username=AlexFloProjetWeb',true);
                   ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
                   ajax.addEventListener('readystatechange',function(e){
-                    if(ajax.readystat == 4 && ajax.status == 200){
+                    if(ajax.readyState == 4 && ajax.status == 200){
+                      console.log('entré dans if');
                       var result = JSON.parse(ajax.responseText);
-                      console.log(result);
+                      var lng = result.geonames[0].lng;
+                      var lat = result.geonames[0].lat;
+                      globeView.controls.setCameraTargetGeoPosition({longitude:lng, latitude:lat}, true);
                     }
+
                   })
+                ajax.send();
 
                 }
-
+                form_selection.addEventListener('submit',chang_lieu);
             });
 
 
