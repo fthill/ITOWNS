@@ -37,8 +37,6 @@ and open the template in the editor.
             /* global itowns,document,GuiTools*/
 
             // Initial position
-
-
             var positionOnGlobe = { longitude: 2.587316, latitude: 48.841063, altitude: 1000 };
 
             // iTowns namespace defined here
@@ -73,15 +71,22 @@ and open the template in the editor.
             globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, function () {
                 // eslint-disable-next-line no-console
                 console.info('Globe initialized');
-                /*
-                ****************************
-                ****************************
-                CODE HERE
-                CODE HERE
-                CODE HERE
-                ****************************
-                ****************************
-                */
+
+                var form_selection = document.getElementById('ville'); 
+
+                function chang_lieu(event){
+                  var ajax = new XMLHttpRequest();
+                  var lieu_choisi = "Forcalquier"//document.getElementById("");
+                  ajax.open('GET', 'http://api.geonames.org/search?q='+lieu_choisi+'&username=AlexFloProjetWeb',true);
+                  ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+                  ajax.addEventListener('readystatechange',function(e){
+                    if(ajax.readystat == 4 && ajax.status == 200){
+                      var result = JSON.parse(ajax.responseText);
+                      console.log(result);
+                    }
+                  })
+
+                }
 
             });
 
