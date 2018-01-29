@@ -14,14 +14,40 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="itowns.css">
     </head>
     <body>
+        <div id='pieddepage'></div>
+        <div class="Letout">
+        <div id='formulaire'>
+
+            <form action="/search" id="searchthis" method="get">
+              <fieldset id="test">
+                <legend>Rechercher un lieu</legend>
+              <select class="ville" action="">
+                <option value="ENSG">ENSG</option>
+                <option value="paris">Paris</option>
+                <option value="lyon">Lyon</option>
+                <option value="marseille">Marseille</option>
+              </select>
+            <input id="search-btn" type="submit" value="Rechercher" />
+            </fielset>
+            </form>
+            <form action="/search" id="ajout" method="get">
+            <fieldset> <legend>Ajouter un lieu</legend>
+              <input id="search" name"p" type="text" placeholder="Entrer un nom"/>
+              <input id="search" name"p" type="text" placeholder="Entrer une latitude"/>
+              <input id="search" name"o" type="text" placeholder="Entrer une longitude"/>
+              <input id="search-btn" type="submit" value="Valider" />
+            </fieldset>
+            </form>
+          </div>
         <div id="viewerDiv"></div>
+        </div>
         <script src="examples/GUI/GuiTools.js"></script>
         <script src="itowns.js"></script>
         <script type="text/javascript">
             /* global itowns,document,GuiTools*/
 
             // Initial position
-            var positionOnGlobe = { longitude: 2.351323, latitude: 48.856712, altitude: 25000000 };
+            var positionOnGlobe = { longitude: 2.587316, latitude: 48.841063, altitude: 1000 };
 
             // iTowns namespace defined here
             // Creation of the HTML DOM where the view will be initialized
@@ -31,8 +57,6 @@ and open the template in the editor.
             // Creation of the menu
             var menuGlobe = new GuiTools('menuDiv', globeView);
             menuGlobe.view = globeView;
-
-
             function addLayerCb(layer) {
                 return globeView.addLayer(layer);
             }
@@ -57,18 +81,28 @@ and open the template in the editor.
             globeView.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, function () {
                 // eslint-disable-next-line no-console
                 console.info('Globe initialized');
-                /*
-                ****************************
-                ****************************                
-                CODE HERE
-                CODE HERE
-                CODE HERE
-                ****************************
-                ****************************
-                */
+
+                var form_selection = document.getElementById('ville');
+
+                function chang_lieu(event){
+                  var ajax = new XMLHttpRequest();
+                  var lieu_choisi = "Forcalquier"//document.getElementById("");
+                  ajax.open('GET', 'http://api.geonames.org/search?q='+lieu_choisi+'&username=AlexFloProjetWeb',true);
+                  ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+                  ajax.addEventListener('readystatechange',function(e){
+                    if(ajax.readystat == 4 && ajax.status == 200){
+                      var result = JSON.parse(ajax.responseText);
+                      console.log(result);
+                    }
+                  })
+
+                }
+
             });
+
 
             window.globeView = globeView;
 </script>
+
     </body>
 </html>
