@@ -36,7 +36,7 @@ and open the template in the editor.
               <input id="searchnom" name"p" type="text" placeholder="Entrer un nom"/>
               <input id="searchlat" name"p" type="text" placeholder="Entrer une latitude"/>
               <input id="searchlon" name"o" type="text" placeholder="Entrer une longitude"/>
-              <input id="search-btn" type="submit" value="Valider" />
+              <input id="search-btn2" type="submit" value="Valider" />
             </fieldset>
             </form>
           </div>
