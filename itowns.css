@@ -6,34 +6,52 @@ body {
 	overflow:hidden;
 	height:100%
 }
+.LeTout{
+	display : flex;
+	flex-direction: row;
 
+}
 form{
 	display : flex;
   flex-direction: column;
 	position : fixed;
+
 }
 .formulaire{
 	width: 164px;
-}
-.coordone input{
-	width: 50px;
+		color: black;
 }
 select{
 	width:160px;
-	 background-color: pink;
+	 background-color: #f99bee;
 }
+fieldset{
+	display: flex;
+	flex-direction: column;
+}
+#ajout{
+	margin-top: 20px;
+	margin-left:-16px;
+}
+
 input{
  width:160px;
- 	background-color: pink;
+ 	background-color:#f99bee;
+	color:black;
+	border-width: 0.3px;
 }
 option{
 	width:160px;
-  	background-color: pink;
+  	background-color: #f99bee;
 }
+#test{
+	margin:12px;
+}
+
 #viewerDiv {
     margin : auto auto;
 		width:85%;
-		height:95%;
+		height: 1000px;
 		margin-right: 0;
 }
 #menuDiv {
