@@ -18,23 +18,25 @@ and open the template in the editor.
         <div class="Letout">
         <div id='formulaire'>
 
-            <form action="/search" id="searchthis" method="get">
+            <form id="searchthis" method="get">
               <fieldset id="test">
                 <legend>Rechercher un lieu</legend>
-              <select class="ville" action="">
-                <option value="ENSG">ENSG</option>
+              <select id="ville" action="">
+                <option value="Champs-sur-Marne">ENSG</option>
+
                 <option value="paris">Paris</option>
                 <option value="lyon">Lyon</option>
                 <option value="marseille">Marseille</option>
               </select>
             <input id="search-btn" type="submit" value="Rechercher" />
-            </fielset>
+          </fieldset>
             </form>
-            <form action="/search" id="ajout" method="get">
+            <form id="ajout" method="get">
             <fieldset> <legend>Ajouter un lieu</legend>
               <input id="search" name"p" type="text" placeholder="Entrer un nom"/>
               <input id="search" name"p" type="text" placeholder="Entrer une latitude"/>
               <input id="search" name"o" type="text" placeholder="Entrer une longitude"/>
+              <input id="search" name"o" type="text" placeholder="Entrer l'url d'une photo"/>
               <input id="search-btn" type="submit" value="Valider" />
             </fieldset>
             </form>
@@ -47,7 +49,7 @@ and open the template in the editor.
             /* global itowns,document,GuiTools*/
 
             // Initial position
-            var positionOnGlobe = { longitude: 2.587316, latitude: 48.841063, altitude: 1000 };
+            var positionOnGlobe = { longitude: 2.587316, latitude: 48.841063, altitude: 10000 };
 
             // iTowns namespace defined here
             // Creation of the HTML DOM where the view will be initialized
@@ -82,22 +84,31 @@ and open the template in the editor.
                 // eslint-disable-next-line no-console
                 console.info('Globe initialized');
 
-                var form_selection = document.getElementById('ville');
+
+                var form_selection = document.getElementById('searchthis')
+                var liste_ville = document.getElementById('ville');
+
 
                 function chang_lieu(event){
+                  event.preventDefault();
                   var ajax = new XMLHttpRequest();
-                  var lieu_choisi = "Forcalquier"//document.getElementById("");
-                  ajax.open('GET', 'http://api.geonames.org/search?q='+lieu_choisi+'&username=AlexFloProjetWeb',true);
+                  var lieu_choisi = liste_ville.options[liste_ville.selectedIndex].value;
+                  ajax.open('GET', 'http://api.geonames.org/searchJSON?q='+lieu_choisi+'&maxRows=1&username=AlexFloProjetWeb',true);
                   ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
                   ajax.addEventListener('readystatechange',function(e){
-                    if(ajax.readystat == 4 && ajax.status == 200){
+                    if(ajax.readyState == 4 && ajax.status == 200){
+                      console.log('entré dans if');
                       var result = JSON.parse(ajax.responseText);
-                      console.log(result);
+                      var lng = result.geonames[0].lng;
+                      var lat = result.geonames[0].lat;
+                      globeView.controls.setCameraTargetGeoPosition({longitude:lng, latitude:lat}, true);
                     }
+
                   })
+                ajax.send();
 
                 }
-
+                form_selection.addEventListener('submit',chang_lieu);
             });
 
 
