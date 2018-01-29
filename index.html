@@ -16,20 +16,18 @@ and open the template in the editor.
     <body>
         <div id='pieddepage'></div>
         <div id='formulaire'>
-          <div class="recherche_p">
-<form action="/search" id="searchthis" method="get">
-<input id="search" name="q" type="text" placeholder="Entrer une adresse" />
-<div id='coordonne'>
-<input id="search" name"p" type="text" placeholder="Entrer une latitude"/>
-<input id="search" name"o" type="text" placeholder="Entrer une longitude"/>
-</div>
-<input id="search-btn" type="submit" value="Rechercher" />
-</form>
-
-
-</div>
-        </div>
-
+            <form action="/search" id="searchthis" method="get">
+              <select class="ville" action="">
+                <option value="ENSG">ENSG</option>
+                <option value="paris">Paris</option>
+                <option value="lyon">Lyon</option>
+                <option value="marseille">Marseille</option>
+              </select>
+              <input id="search" name"p" type="text" placeholder="Entrer une latitude"/>
+              <input id="search" name"o" type="text" placeholder="Entrer une longitude"/>
+              <input id="search-btn" type="submit" value="Rechercher" />
+            </form>
+          </div>
         <div id="viewerDiv"></div>
         <script src="examples/GUI/GuiTools.js"></script>
         <script src="itowns.js"></script>
@@ -93,5 +91,6 @@ and open the template in the editor.
 
             window.globeView = globeView;
 </script>
+
     </body>
 </html>
