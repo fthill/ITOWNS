@@ -14,21 +14,21 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="itowns.css">
     </head>
     <body>
-        <div id='pieddepage'></div>
+
+
         <div class="Letout">
         <div id='formulaire'>
 
-            <form id="searchthis" method="get">
+            <form id="searchthis" method="post">
               <fieldset id="test">
                 <legend>Rechercher un lieu</legend>
               <select id="ville" action="">
                 <option value="Champs-sur-Marne">ENSG</option>
-
-                <option value="paris">Paris</option>
-                <option value="lyon">Lyon</option>
-                <option value="marseille">Marseille</option>
+                <option value='paris'>Paris</option>
+                <option value='lyon'>Lyon</option>
+                <option value='marseille'>Marseille</option>
               </select>
-            <input id="search-btn" type="submit" value="Rechercher" />
+            <input id="search-btn" type="submit" value="Rechercher" name = "search" />
           </fieldset>
             </form>
             <form id="ajout" method="get">
@@ -36,7 +36,6 @@ and open the template in the editor.
               <input id="search" name"p" type="text" placeholder="Entrer un nom"/>
               <input id="search" name"p" type="text" placeholder="Entrer une latitude"/>
               <input id="search" name"o" type="text" placeholder="Entrer une longitude"/>
-              <input id="search" name"o" type="text" placeholder="Entrer l'url d'une photo"/>
               <input id="search-btn" type="submit" value="Valider" />
             </fieldset>
             </form>
@@ -114,6 +113,21 @@ and open the template in the editor.
 
             window.globeView = globeView;
 </script>
+        <div id='pieddepage'>
+          <?php
+          if (isset($_POST['search'])) {
+            print_r($_POST['ville']);
 
+          }
+          if($_POST['search']= 'Paris'){
+            echo "<img src='paris.jpg' alt='exteAlternatif' /><img src='ParisArc.jpg' alt='TexteAlternatif' /><img src='ParisLouvre.jpg' alt='TexteAlternatif' /><img src='ParisNotre_dame.jpg' alt='TexteAlternatif' />";
+          }elseif ($_POST["search"]='Lyon') {
+            echo "<img src='lyon.jpg' alt='TexteAlternatif' /><img src='LyonConfluences.jpg' alt='TexteAlternatif' /><img src='Lyon-header.jpg' alt='TexteAlternatif' /><img src='LyonShow.jpg' alt='TexteAlternatif' />";
+          }elseif ($_POST["search"]='Marseille') {
+            echo"<img src='marseille.jpg' alt='TexteAlternatif' /><img src='MarseillePort.jpg' alt='TexteAlternatif' /><img src='Marseillecathédrale.jpg' alt='TexteAlternatif' /><img src='MarseilleRues.jpg' alt='TexteAlternatif' />";
+          }else{
+            echo"<img src='enpc.jpg' alt='TexteAlternatif' /><img src='ENSG.jpg' alt='TexteAlternatif' /><img src='ensg2.jpg' alt='TexteAlternatif' /><img src='logo_ensg.png' alt='TexteAlternatif' />";
+          } ?>
+        </div>
     </body>
 </html>
