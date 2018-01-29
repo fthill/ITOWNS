@@ -36,7 +36,6 @@ and open the template in the editor.
               <input id="searchnom" name"p" type="text" placeholder="Entrer un nom"/>
               <input id="searchlat" name"p" type="text" placeholder="Entrer une latitude"/>
               <input id="searchlon" name"o" type="text" placeholder="Entrer une longitude"/>
-              <input id="searchphoto" name"o" type="text" placeholder="Entrer l'url d'une photo"/>
               <input id="search-btn2" type="submit" value="Valider" />
             </fieldset>
             </form>
@@ -96,9 +95,7 @@ and open the template in the editor.
                   ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
                   ajax.addEventListener('readystatechange',function(e){
                     if(ajax.readyState == 4 && ajax.status == 200){
-                      console.log('entré dans if');
                       var result = JSON.parse(ajax.responseText);
-                      console.log(result);
                       var lng = result.geonames[0].lng;
                       var lat = result.geonames[0].lat;
                       globeView.controls.setCameraTargetGeoPosition({longitude:lng, latitude:lat}, true);
@@ -116,7 +113,6 @@ and open the template in the editor.
 
                 function rechercher_lieu(event){
                   event.preventDefault();
-                  console.log(lati);
                   if ((document.getElementById('searchnom').value != '' && lati.value == '' && longi.value == '') || (document.getElementById('searchnom').value == '' && lati.value != '' && longi.value != '')) {
                     if (document.getElementById('searchnom').value != ''){
                       var ajax = new XMLHttpRequest();
@@ -125,9 +121,7 @@ and open the template in the editor.
                       ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
                       ajax.addEventListener('readystatechange',function(e){
                         if(ajax.readyState == 4 && ajax.status == 200){
-                          console.log('entré dans if');
                           var result = JSON.parse(ajax.responseText);
-                          console.log(result);
                           var lng = result.geonames[0].lng;
                           var lat = result.geonames[0].lat;
                           globeView.controls.setCameraTargetGeoPosition({longitude:lng, latitude:lat}, true);
@@ -137,7 +131,6 @@ and open the template in the editor.
                       ajax.send();
                     }
                       if (lati.value != '' && longi.value != '') {
-                        console.log("entree dans if lati longi");
                         globeView.controls.setCameraTargetGeoPosition({longitude:longi.value, latitude:lati.value}, true);
                         lati.innerHTML='';
                         longi.innerHTML='';
