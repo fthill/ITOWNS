@@ -18,16 +18,22 @@ form{
 .coordone input{
 	width: 50px;
 }
+select{
+	width:160px;
+	 background-color: pink;
+}
 input{
-
  width:160px;
-	background-color: pink;
+ 	background-color: pink;
+}
+option{
+	width:160px;
+  	background-color: pink;
 }
 #viewerDiv {
     margin : auto auto;
-    width: 85%;
-    height: 90%;
-
+		width:85%;
+		height:95%;
 		margin-right: 0;
 }
 #menuDiv {
