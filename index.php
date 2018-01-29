@@ -33,9 +33,9 @@ and open the template in the editor.
             </form>
             <form id="ajout" method="get">
             <fieldset> <legend>Ajouter un lieu</legend>
-              <input id="search" name"p" type="text" placeholder="Entrer un nom"/>
-              <input id="search" name"p" type="text" placeholder="Entrer une latitude"/>
-              <input id="search" name"o" type="text" placeholder="Entrer une longitude"/>
+              <input id="searchnom" name"p" type="text" placeholder="Entrer un nom"/>
+              <input id="searchlat" name"p" type="text" placeholder="Entrer une latitude"/>
+              <input id="searchlon" name"o" type="text" placeholder="Entrer une longitude"/>
               <input id="search-btn" type="submit" value="Valider" />
             </fieldset>
             </form>
@@ -84,9 +84,8 @@ and open the template in the editor.
                 console.info('Globe initialized');
 
 
-                var form_selection = document.getElementById('searchthis')
+                var form_selection = document.getElementById('searchthis');
                 var liste_ville = document.getElementById('ville');
-
 
                 function chang_lieu(event){
                   event.preventDefault();
@@ -98,16 +97,56 @@ and open the template in the editor.
                     if(ajax.readyState == 4 && ajax.status == 200){
                       console.log('entré dans if');
                       var result = JSON.parse(ajax.responseText);
+                      console.log(result);
                       var lng = result.geonames[0].lng;
                       var lat = result.geonames[0].lat;
                       globeView.controls.setCameraTargetGeoPosition({longitude:lng, latitude:lat}, true);
                     }
-
                   })
                 ajax.send();
-
                 }
+
                 form_selection.addEventListener('submit',chang_lieu);
+
+                var form_recherche = document.getElementById('ajout');
+                var lati = document.getElementById('searchlat');
+
+                var longi = document.getElementById('searchlon');
+
+                function rechercher_lieu(event){
+                  event.preventDefault();
+                  console.log(lati);
+                  if ((document.getElementById('searchnom').value != '' && lati.value == '' && longi.value == '') || (document.getElementById('searchnom').value == '' && lati.value != '' && longi.value != '')) {
+                    if (document.getElementById('searchnom').value != ''){
+                      var ajax = new XMLHttpRequest();
+                      var lieu_choisi = document.getElementById('searchnom').value;
+                      ajax.open('GET', 'http://api.geonames.org/searchJSON?q='+lieu_choisi+'&maxRows=1&username=AlexFloProjetWeb',true);
+                      ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+                      ajax.addEventListener('readystatechange',function(e){
+                        if(ajax.readyState == 4 && ajax.status == 200){
+                          console.log('entré dans if');
+                          var result = JSON.parse(ajax.responseText);
+                          console.log(result);
+                          var lng = result.geonames[0].lng;
+                          var lat = result.geonames[0].lat;
+                          globeView.controls.setCameraTargetGeoPosition({longitude:lng, latitude:lat}, true);
+                          document.getElementById('searchnom').innerHTML = '';
+                        }
+                      })
+                      ajax.send();
+                    }
+                      if (lati.value != '' && longi.value != '') {
+                        console.log("entree dans if lati longi");
+                        globeView.controls.setCameraTargetGeoPosition({longitude:longi.value, latitude:lati.value}, true);
+                        lati.innerHTML='';
+                        longi.innerHTML='';
+                      }
+                  }else{
+                    alert('Il ne faut remplir que le nom ou que lat/lon !')
+                  }
+                }
+
+                form_recherche.addEventListener('submit', rechercher_lieu);
             });
 
 
