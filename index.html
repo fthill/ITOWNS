@@ -15,6 +15,7 @@ and open the template in the editor.
     </head>
     <body>
         <div id='pieddepage'></div>
+        <div class="Letout">
         <div id='formulaire'>
             <form action="/search" id="searchthis" method="get">
               <select class="ville" action="">
@@ -29,6 +30,7 @@ and open the template in the editor.
             </form>
           </div>
         <div id="viewerDiv"></div>
+        </div>
         <script src="examples/GUI/GuiTools.js"></script>
         <script src="itowns.js"></script>
         <script type="text/javascript">
@@ -70,7 +72,7 @@ and open the template in the editor.
                 // eslint-disable-next-line no-console
                 console.info('Globe initialized');
 
-                var form_selection = document.getElementById('ville'); 
+                var form_selection = document.getElementById('ville');
 
                 function chang_lieu(event){
                   var ajax = new XMLHttpRequest();
