@@ -14,30 +14,29 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="itowns.css">
     </head>
     <body>
-        <div id='pieddepage'></div>
+
+
         <div class="Letout">
         <div id='formulaire'>
 
-            <form id="searchthis" method="get">
+            <form id="searchthis" method="post">
               <fieldset id="test">
                 <legend>Rechercher un lieu</legend>
               <select id="ville" action="">
                 <option value="Champs-sur-Marne">ENSG</option>
-
-                <option value="paris">Paris</option>
-                <option value="lyon">Lyon</option>
-                <option value="marseille">Marseille</option>
+                <option value='paris'>Paris</option>
+                <option value='lyon'>Lyon</option>
+                <option value='marseille'>Marseille</option>
               </select>
-            <input id="search-btn" type="submit" value="Rechercher" />
+            <input id="search-btn" type="submit" value="Rechercher" name = "search" />
           </fieldset>
             </form>
             <form id="ajout" method="get">
             <fieldset> <legend>Ajouter un lieu</legend>
-              <input id="search" name"p" type="text" placeholder="Entrer un nom"/>
-              <input id="search" name"p" type="text" placeholder="Entrer une latitude"/>
-              <input id="search" name"o" type="text" placeholder="Entrer une longitude"/>
-              <input id="search" name"o" type="text" placeholder="Entrer l'url d'une photo"/>
-              <input id="search-btn" type="submit" value="Valider" />
+              <input id="searchnom" name"p" type="text" placeholder="Entrer un nom"/>
+              <input id="searchlat" name"p" type="text" placeholder="Entrer une latitude"/>
+              <input id="searchlon" name"o" type="text" placeholder="Entrer une longitude"/>
+              <input id="search-btn2" type="submit" value="Valider" />
             </fieldset>
             </form>
           </div>
@@ -85,9 +84,8 @@ and open the template in the editor.
                 console.info('Globe initialized');
 
 
-                var form_selection = document.getElementById('searchthis')
+                var form_selection = document.getElementById('searchthis');
                 var liste_ville = document.getElementById('ville');
-
 
                 function chang_lieu(event){
                   event.preventDefault();
@@ -97,23 +95,72 @@ and open the template in the editor.
                   ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
                   ajax.addEventListener('readystatechange',function(e){
                     if(ajax.readyState == 4 && ajax.status == 200){
-                      console.log('entré dans if');
                       var result = JSON.parse(ajax.responseText);
                       var lng = result.geonames[0].lng;
                       var lat = result.geonames[0].lat;
                       globeView.controls.setCameraTargetGeoPosition({longitude:lng, latitude:lat}, true);
                     }
-
                   })
                 ajax.send();
-
                 }
+
                 form_selection.addEventListener('submit',chang_lieu);
+
+                var form_recherche = document.getElementById('ajout');
+                var lati = document.getElementById('searchlat');
+
+                var longi = document.getElementById('searchlon');
+
+                function rechercher_lieu(event){
+                  event.preventDefault();
+                  if ((document.getElementById('searchnom').value != '' && lati.value == '' && longi.value == '') || (document.getElementById('searchnom').value == '' && lati.value != '' && longi.value != '')) {
+                    if (document.getElementById('searchnom').value != ''){
+                      var ajax = new XMLHttpRequest();
+                      var lieu_choisi = document.getElementById('searchnom').value;
+                      ajax.open('GET', 'http://api.geonames.org/searchJSON?q='+lieu_choisi+'&maxRows=1&username=AlexFloProjetWeb',true);
+                      ajax.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+                      ajax.addEventListener('readystatechange',function(e){
+                        if(ajax.readyState == 4 && ajax.status == 200){
+                          var result = JSON.parse(ajax.responseText);
+                          var lng = result.geonames[0].lng;
+                          var lat = result.geonames[0].lat;
+                          globeView.controls.setCameraTargetGeoPosition({longitude:lng, latitude:lat}, true);
+                          document.getElementById('searchnom').innerHTML = '';
+                        }
+                      })
+                      ajax.send();
+                    }
+                      if (lati.value != '' && longi.value != '') {
+                        globeView.controls.setCameraTargetGeoPosition({longitude:longi.value, latitude:lati.value}, true);
+                        lati.innerHTML='';
+                        longi.innerHTML='';
+                      }
+                  }else{
+                    alert('Il ne faut remplir que le nom ou que lat/lon !')
+                  }
+                }
+
+                form_recherche.addEventListener('submit', rechercher_lieu);
             });
 
 
             window.globeView = globeView;
 </script>
+        <div id='pieddepage'>
+          <?php
+          if (isset($_POST['search'])) {
+            print_r($_POST['ville']);
 
+          }
+          if($_POST['search']= 'Paris'){
+            echo "<img src='paris.jpg' alt='exteAlternatif' /><img src='ParisArc.jpg' alt='TexteAlternatif' /><img src='ParisLouvre.jpg' alt='TexteAlternatif' /><img src='ParisNotre_dame.jpg' alt='TexteAlternatif' />";
+          }elseif ($_POST["search"]='Lyon') {
+            echo "<img src='lyon.jpg' alt='TexteAlternatif' /><img src='LyonConfluences.jpg' alt='TexteAlternatif' /><img src='Lyon-header.jpg' alt='TexteAlternatif' /><img src='LyonShow.jpg' alt='TexteAlternatif' />";
+          }elseif ($_POST["search"]='Marseille') {
+            echo"<img src='marseille.jpg' alt='TexteAlternatif' /><img src='MarseillePort.jpg' alt='TexteAlternatif' /><img src='Marseillecathédrale.jpg' alt='TexteAlternatif' /><img src='MarseilleRues.jpg' alt='TexteAlternatif' />";
+          }else{
+            echo"<img src='enpc.jpg' alt='TexteAlternatif' /><img src='ENSG.jpg' alt='TexteAlternatif' /><img src='ensg2.jpg' alt='TexteAlternatif' /><img src='logo_ensg.png' alt='TexteAlternatif' />";
+          } ?>
+        </div>
     </body>
 </html>

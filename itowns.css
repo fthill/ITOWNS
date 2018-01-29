@@ -17,6 +17,16 @@ form{
 	position : fixed;
 
 }
+#pieddepage{
+	display:flex;
+	flex-direction: row;
+	margin-left:560px; 
+}
+img{
+	width:15%;
+	height:15%;
+
+}
 .formulaire{
 	width: 164px;
 		color: black;
@@ -52,7 +62,7 @@ option{
 #viewerDiv {
     margin : auto auto;
 		width:85%;
-		height: 1000px;
+		height: 800px;
 		margin-right: 0;
 }
 #menuDiv {
